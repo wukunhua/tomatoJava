@@ -3,8 +3,10 @@ package com.example.toamto.controller;
 import com.example.toamto.mapper.ComponentMapper;
 import com.example.toamto.model.Component;
 import com.example.toamto.model.Page;
+import com.example.toamto.model.ResultObj;
 import com.example.toamto.service.ComponentService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +21,14 @@ public class ComponentController {
 
 
     @GetMapping(value = "/getComponentList")
-    public Page<Component> getComponentList(@RequestParam(value = "pagenum") Integer pagenum,@RequestParam(value = "size") Integer size){
+    public ResultObj getComponentList(@RequestParam(value = "pagenum",defaultValue = "1") Integer pagenum,@RequestParam(value = "size",defaultValue = "10") Integer size){
         System.out.println(pagenum);
         return componentService.getComponentList((pagenum - 1),size);
+    }
+
+    @PostMapping("/saveComponent")
+    public ResultObj saveComponent(Component component){
+        return componentService.saveComponent(component);
     }
 
     @GetMapping("/test")

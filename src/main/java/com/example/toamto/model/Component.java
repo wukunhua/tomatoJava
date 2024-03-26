@@ -1,21 +1,14 @@
 package com.example.toamto.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 @TableName("component")
 public class Component {
 
-    @TableId
-    private Integer id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
     private String componentsname;
 
@@ -23,11 +16,25 @@ public class Component {
 
     private Integer num;
 
-    public String getcomponentsname() {
+    private Integer price;
+
+    private Integer cost;
+
+    private Integer position;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getComponentsname() {
         return componentsname;
     }
 
-    public void setcomponentsname(String componentsname) {
+    public void setComponentsname(String componentsname) {
         this.componentsname = componentsname;
     }
 
@@ -70,11 +77,5 @@ public class Component {
     public void setPosition(Integer position) {
         this.position = position;
     }
-
-    private Integer price;
-
-    private Integer cost;
-
-    private Integer position;
 }
 

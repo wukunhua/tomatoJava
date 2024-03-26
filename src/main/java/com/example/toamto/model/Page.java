@@ -8,7 +8,16 @@ import java.util.List;
 public class Page<T> {
     private int page;//分页起始页
     private int size;//每页记录数
-    private List<T> data;//返回的记录集合
+    private List<T> list;//返回的记录集合
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
+    }
+
     private long total;//总记录条数
 
 
@@ -28,13 +37,7 @@ public class Page<T> {
         this.size = size;
     }
 
-    public List<T> getData() {
-        return data;
-    }
 
-    public void setData(List<T> data) {
-        this.data = data;
-    }
 
     public long getTotal() {
         return total;
@@ -49,7 +52,7 @@ public class Page<T> {
         return "Pager{" +
                 "page=" + page +
                 ", size=" + size +
-                ", data=" + data +
+                ", list=" + list +
                 ", total=" + total +
                 '}';
     }

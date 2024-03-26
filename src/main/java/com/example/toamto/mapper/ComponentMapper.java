@@ -17,4 +17,6 @@ public interface ComponentMapper extends BaseMapper<Component> {
 
     @Select("select count(1) from component")
     Long findComponentCount();
+
+
 }
