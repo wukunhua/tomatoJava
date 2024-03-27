@@ -18,5 +18,5 @@ public interface ComponentMapper extends BaseMapper<Component> {
     @Select("select count(1) from component")
     Long findComponentCount();
 
-
+    List<Component> getComponentListByPage(@Param("componentsname") String componentsname,@Param("manufacturer") String manufacturer);
 }
