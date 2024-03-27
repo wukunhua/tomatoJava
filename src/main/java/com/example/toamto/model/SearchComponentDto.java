@@ -1,6 +1,13 @@
 package com.example.toamto.model;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class SearchComponentDto extends Component{
+
+    public SearchComponentDto(){
+        this.page = 1;
+        this.size = 10;
+    }
     private Integer page;
 
     public Integer getPage() {
@@ -10,6 +17,7 @@ public class SearchComponentDto extends Component{
     public void setPage(Integer page) {
         this.page = page;
     }
+
 
     public Integer getSize() {
         return size;

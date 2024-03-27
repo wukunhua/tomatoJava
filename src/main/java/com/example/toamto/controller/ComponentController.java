@@ -22,25 +22,18 @@ public class ComponentController {
 
 
     @GetMapping(value = "/getComponentList")
-    public ResultObj getComponentList(@RequestParam(value = "pagenum",defaultValue = "1") Integer pagenum,@RequestParam(value = "size",defaultValue = "10") Integer size){
-        System.out.println(pagenum);
-        return componentService.getComponentList((pagenum - 1),size);
-    }
-
-    @GetMapping(value = "/getComponentListByIpage")
-    public ResultObj getComponentListByIpage(SearchComponentDto dto){
-        return componentService.getComponentListByIpage(dto);
-    }
-
-
-    @GetMapping(value = "/getComponentListByPage")
-    public ResultObj getComponentListByPage(SearchComponentDto dto){
-        return componentService.getComponentListByPage(dto);
+    public ResultObj getComponentList(SearchComponentDto dto){
+        return componentService.getComponentList(dto);
     }
 
     @PostMapping("/saveComponent")
     public ResultObj saveComponent(Component component){
         return componentService.saveComponent(component);
+    }
+
+    @PostMapping("/changeComponentNum")
+    public ResultObj changeComponentNum(Long id,Boolean isAdd,Integer num){
+        return componentService.updateComponent(id,isAdd,num);
     }
 
     @GetMapping("/test")

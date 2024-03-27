@@ -2,7 +2,9 @@ package com.example.toamto.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.toamto.mapper.ComponentMapper;
 import com.example.toamto.model.Component;
 import com.example.toamto.model.Page;
@@ -18,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class ComponentService {
+public class ComponentService extends ServiceImpl<ComponentMapper,Component> {
     @Resource
     ComponentMapper componentMapper;
     @Resource
@@ -27,43 +29,41 @@ public class ComponentService {
     @Resource
     ResultObj resultObj;
 
-    public ResultObj getComponentList(Integer num,Integer size){
-        List<Component> list = componentMapper.getComponentList(num,size);
-
-        page.setList(list);
-        page.setTotal(componentMapper.findComponentCount());
-        resultObj.setData(page);
-        resultObj.setCode("v");
-
-        return resultObj;
-    }
-
-    public ResultObj getComponentListByIpage(SearchComponentDto dto){
+    public ResultObj getComponentList(SearchComponentDto dto){
         QueryWrapper<Component> queryWrapper = new QueryWrapper<>();
         Map<String, Object> dtomap = BeanUtil.beanToMap(dto);
         queryWrapper.allEq((k,v)->(
                 k.equals("componentsname") || k.equals("manufacturer")
                 ),dtomap,false);
-        IPage<Component> iPage1 = new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>((dto.getPage()),dto.getSize());
-        iPage1 = componentMapper.selectPage(iPage1,queryWrapper);
-        resultObj.setData(iPage1);
-        resultObj.setCode("v");
+        queryWrapper.orderByDesc("id");
+        try {
+            IPage<Component> iPage = new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>((dto.getPage()),dto.getSize());
+            iPage = componentMapper.selectPage(iPage,queryWrapper);
+            resultObj.setData(iPage);
+            resultObj.setCode("v");
+        }catch (NullPointerException e){
+            resultObj.setCode("error");
+            resultObj.setMsg(e.toString());
+        }
+//        List<Component> componentListByPage = componentMapper.getComponentListByPage(dto.getComponentsname(), dto.getManufacturer());
+//        resultObj.setData(componentListByPage);
 
         return resultObj;
     }
 
+    public ResultObj updateComponent(Long id,Boolean isAdd,Integer num){
+        UpdateWrapper<Component> updateWrapper = new UpdateWrapper<Component>();
+        Component component = componentMapper.selectById(id);
+        if(isAdd){
+            updateWrapper.set("num",component.getNum() + num);
+        }else{
+            updateWrapper.set("num",component.getNum() - num);
+        }
 
-    public ResultObj getComponentListByPage(SearchComponentDto dto){
-
-        //IPage<Component> iPage1 = new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>((dto.getPage() - 1),dto.getSize());
-        List<Component> componentListByPage = componentMapper.getComponentListByPage(dto.getComponentsname(), dto.getManufacturer());
-        resultObj.setData(componentListByPage);
-        resultObj.setCode("v");
-
+        //ComponentService componentService = new ComponentService();
+        this.update(updateWrapper);
         return resultObj;
     }
-
-
 
     public ResultObj saveComponent(Component component){
         componentMapper.insert(component);
