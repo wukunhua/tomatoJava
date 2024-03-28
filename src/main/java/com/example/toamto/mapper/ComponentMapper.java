@@ -1,6 +1,7 @@
 package com.example.toamto.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.toamto.model.Component;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,5 +19,5 @@ public interface ComponentMapper extends BaseMapper<Component> {
     @Select("select count(1) from component")
     Long findComponentCount();
 
-    List<Component> getComponentListByPage(@Param("componentsname") String componentsname,@Param("manufacturer") String manufacturer);
+    List<Component> getComponentListByPage(IPage<Component> iPage, @Param("componentsname") String componentsname, @Param("manufacturer") String manufacturer);
 }

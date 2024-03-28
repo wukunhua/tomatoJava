@@ -8,6 +8,8 @@ public class SearchComponentDto extends Component{
         this.page = 1;
         this.size = 10;
     }
+
+
     private Integer page;
 
     public Integer getPage() {

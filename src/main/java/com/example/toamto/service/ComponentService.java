@@ -29,7 +29,7 @@ public class ComponentService extends ServiceImpl<ComponentMapper,Component> {
     @Resource
     ResultObj resultObj;
 
-    public ResultObj getComponentList(SearchComponentDto dto){
+    public ResultObj getList(SearchComponentDto dto){
         QueryWrapper<Component> queryWrapper = new QueryWrapper<>();
         Map<String, Object> dtomap = BeanUtil.beanToMap(dto);
         queryWrapper.allEq((k,v)->(
@@ -54,6 +54,7 @@ public class ComponentService extends ServiceImpl<ComponentMapper,Component> {
     public ResultObj updateComponent(Long id,Boolean isAdd,Integer num){
         UpdateWrapper<Component> updateWrapper = new UpdateWrapper<Component>();
         Component component = componentMapper.selectById(id);
+        updateWrapper.eq("id",id);
         if(isAdd){
             updateWrapper.set("num",component.getNum() + num);
         }else{

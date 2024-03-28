@@ -6,14 +6,12 @@ import com.example.toamto.model.Page;
 import com.example.toamto.model.ResultObj;
 import com.example.toamto.model.SearchComponentDto;
 import com.example.toamto.service.ComponentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@RequestMapping("/component")
 @RestController
 public class ComponentController {
 
@@ -21,17 +19,17 @@ public class ComponentController {
     ComponentService componentService;
 
 
-    @GetMapping(value = "/getComponentList")
+    @GetMapping(value = "/getList")
     public ResultObj getComponentList(SearchComponentDto dto){
-        return componentService.getComponentList(dto);
+        return componentService.getList(dto);
     }
 
-    @PostMapping("/saveComponent")
+    @PostMapping("/save")
     public ResultObj saveComponent(Component component){
         return componentService.saveComponent(component);
     }
 
-    @PostMapping("/changeComponentNum")
+    @PostMapping("/changeNum")
     public ResultObj changeComponentNum(Long id,Boolean isAdd,Integer num){
         return componentService.updateComponent(id,isAdd,num);
     }
