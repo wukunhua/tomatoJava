@@ -48,10 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http)throws Exception{
         http.authorizeHttpRequests()
-                .antMatchers("/user/register")
+                .antMatchers("/user/register","/upload/sumPrice")
                 .permitAll()
-                .mvcMatchers("/component")
-                .hasAnyAuthority("admin")
                 .anyRequest()
                 .authenticated();
         http.formLogin();

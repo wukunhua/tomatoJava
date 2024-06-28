@@ -10,6 +10,9 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class DBUserDetailsManager implements UserDetailsManager, UserDetailsPasswordService {
@@ -48,12 +51,15 @@ public class DBUserDetailsManager implements UserDetailsManager, UserDetailsPass
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>();
         userQueryWrapper.eq("username",username);
         User user = userMapper.selectOne(userQueryWrapper);
+
+
         if(user == null){
             throw new UsernameNotFoundException(username);
         }else{
+
             return user;
         }
     }

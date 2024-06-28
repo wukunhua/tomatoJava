@@ -26,6 +26,12 @@ public class ComponentController {
         return componentService.getList(dto);
     }
 
+    @GetMapping(value = "/getListNormal")
+    public ResultObj getComponentListNormal(@RequestHeader Map<String,String > headers, SearchComponentDto dto){
+
+        return componentService.getList(dto);
+    }
+
     @PostMapping("/save")
     public ResultObj saveComponent(Component component){
         return componentService.saveComponent(component);
